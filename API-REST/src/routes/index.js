@@ -15,13 +15,13 @@ router.get("/", (req, res) => {
     res.send("hola amigo, estas en route y funciona modulos indexjs")
 })
 
-router.get("/register", find);
+router.get("/register", find);//trae info, quienes se regitraron
 router.post("/register", register2);
 router.post("/login", login2);
 router.post("/logout", logout2);
 router.get("/profile", authRequired2, profile);
 /* router.post("/register", validateSchema(registerSchema), register); para validar con zod 
-router.post("/login", validateSchema (loginSchema), login); */ //npm
+router.post("/login", validateSchema (loginSchema), login); */ //valida ver validator authh.validator
 router.post("/", async (req, res) => {
     const { name, password, email } = req.body;
     const saltRounds = 10;

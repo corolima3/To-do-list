@@ -7,8 +7,8 @@ const task = require('./routes/routeTask.js');
 
 const app = express();
 
+app.use(cors({origin: '*'}));
 app.use(express.json());
-app.use(cors());
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use('/', routes);

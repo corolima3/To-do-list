@@ -12,6 +12,8 @@ const register2 = async (req, res) => {
 
   const { email, password, name } = req.body;
   try {
+    const userFound= await User.findOne({email})
+    if (userFound) return res.status(400).json(["The email already exists"])//{message: "The email already exists}
 
     const passwordHash = await bcrypt.hash(password, 10)
     const newUser = new User({
@@ -108,18 +110,25 @@ const login2 = async (req, res) => {
     const userFound = await User.findOne({ email });
 
     if (!userFound)
+      return res.status(400).json(["The email does not exist"]
+      );
+    /* if (!userFound)
       return res.status(400).json({
         message: ["The email does not exist"],
-      });
+      }); */
 
     const isMatch = await bcrypt.compare(password, userFound.password);
     console.log(isMatch);
     if (!isMatch) {
+      return res.status(400).json(["The password is incorrect"],
+      );
+    }
+  /*   if (!isMatch) {
       return res.status(400).json({
         message: ["The password is incorrect"],
       });
     }
-
+ */
     const token = await createAccessToken({
       id: userFound._id
     });
